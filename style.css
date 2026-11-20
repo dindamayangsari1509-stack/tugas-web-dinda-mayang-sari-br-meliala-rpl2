@@ -1,0 +1,195 @@
+/* RESET & GAYA DASAR */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { 
+  font-family: 'Segoe UI', sans-serif; 
+  /* Background gradient lembut agar efek pantulan cairan/kaca terlihat hidup */
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0d9488 100%);
+  color: #1e293b; 
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  display: grid;
+  grid-template-columns: 220px 1fr 220px;
+  grid-template-areas:
+    "header header header"
+    "sidebar main promo"
+    "footer footer footer";
+  gap: 16px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.logo { font-weight: bold; font-size: 1.2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: #38bdf8; }
+
+.hamburger-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.15); color: #fff; border: none;
+  padding: 8px 12px; border-radius: 8px; font-size: 1.2rem; cursor: pointer;
+}
+
+.sidebar-kiri {
+  grid-area: sidebar; 
+  color: #fff;
+  padding: 20px;
+}
+.sidebar-kiri ul { list-style: none; margin-top: 12px; line-height: 2; }
+.sidebar-kiri li { color: #cbd5e1; }
+
+.konten-utama {
+  grid-area: main; 
+  background: rgba(255, 255, 255, 0.85); /* Konten utama agak terang agar teks jelas */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.8);
+  padding: 20px; border-radius: 14px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 16px;
+}
+
+/* KARTU DENGAN EFEK LIQUID GLASS INTERAKTIF */
+.card {
+  background: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 16px; border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek saat kursor mendekati kartu (seperti permukaan cair yang merespon) */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(13, 148, 136, 0.25), inset 0 1px 0 rgba(255,255,255,1);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.card h4 {
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.card p {
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.widget-promo {
+  grid-area: promo; 
+  color: #fff;
+  padding: 20px;
+}
+
+.promo-box { 
+  background: rgba(255, 255, 255, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px; border-radius: 8px; margin-top: 10px; 
+}
+
+.footer {
+  grid-area: footer; 
+  color: #f8fafc;
+  text-align: center; padding: 14px;
+}
+
+/* BREAKPOINT RESPONSIF */
+@media screen and (min-width: 601px) and (max-width: 1023px) {
+  page-wrapper {
+    grid-template-columns: 190px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "footer footer";
+  }
+  .widget-promo { display: none; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 600px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+    padding: 10px;
+  }
+  
+  /* --- BAGIAN YANG DITAMBAHKAN AGAR MENU ACCORDION BERFUNGSI --- */
+  .header {
+    flex-wrap: wrap; /* Agar elemen header melar saat menu dibuka */
+    position: relative;
+  }
+
+  .sidebar-kiri, .widget-promo { display: none; }
+  
+  .hamburger-btn { display: block; }
+
+  /* Ubah .nav-links dari display:none menjadi accordion turun ke bawah */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 0;           /* Disembunyikan awalnya (tinggi 0) */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out; /* Efek transisi mulus */
+    gap: 0;
+    align-items: flex-start;
+  }
+
+  /* Saat kelas .active dipanggil oleh JavaScript, menu akan terbuka turun ke bawah */
+  .nav-links.active {
+    max-height: 250px; 
+    padding-top: 15px;
+  }
+
+  .nav-links a {
+    padding: 8px 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  /* ----------------------------------------------------------- */
+
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+/* TANTANGAN 2: ORIENTATION BREAKPOINT (HP Landscape) */
+@media (max-width: 850px) and (orientation: landscape) {
+  .header {
+    background: rgba(13, 148, 136, 0.25);
+  }
+}
+
+/* TANTANGAN 3: SMART TV BREAKPOINT (> 1920px) */
+@media (min-width: 1921px) {
+  html {
+    font-size: 20px;
+  }
+}

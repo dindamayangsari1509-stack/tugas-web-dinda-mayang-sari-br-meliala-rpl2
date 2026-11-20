@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal RPL SMKN 9 Medan - Liquid Glass</title>
+
+<style>
+/* RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #050b1c, #102b60, #450f32);
+}
+
+/* BACKGROUND CAHAYA MERAH DAN BIRU */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 55vmax;
+    height: 55vmax;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .65;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
+    top: -20vmax;
+    left: -15vmax;
+    background: radial-gradient(circle, #2563eb, transparent 65%);
+    animation: cahayaBiru 15s ease-in-out infinite alternate;
+}
+
+body::after {
+    bottom: -20vmax;
+    right: -15vmax;
+    background: radial-gradient(circle, #dc2626, transparent 65%);
+    animation: cahayaMerah 17s ease-in-out infinite alternate;
+}
+
+@keyframes cahayaBiru {
+    to { transform: translate(45vw, 35vh); }
+}
+
+@keyframes cahayaMerah {
+    to { transform: translate(-40vw, -30vh); }
+}
+
+/* LAYOUT UTAMA */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 220px 1fr 220px;
+    grid-template-areas:
+        "header header header"
+        "sidebar main promo"
+        "footer footer footer";
+    gap: 18px;
+    max-width: 1440px;
+    margin: auto;
+    padding: 18px;
+    min-height: 100vh;
+}
+
+/* LIQUID GLASS */
+.header,
+.sidebar-kiri,
+.konten-utama,
+.widget-promo,
+.footer,
+.card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.17),
+        rgba(255,255,255,.045)
+    );
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 18px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35),
+        inset 0 1px 1px rgba(255,255,255,.4);
+}
+
+/* KILAU DINAMIS */
+.header::before,
+.sidebar-kiri::before,
+.konten-utama::before,
+.widget-promo::before,
+.footer::before,
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        115deg,
+        transparent 25%,
+        rgba(255,255,255,.25) 48%,
+        transparent 68%
+    );
+    transform: translateX(-120%);
+    animation: kilau 8s ease-in-out infinite;
+}
+
+@keyframes kilau {
+    0%, 55% { transform: translateX(-120%); }
+    100% { transform: translateX(120%); }
+}
+
+/* HEADER */
+.header {
+    grid-area: header;
+    padding: 17px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+/* LOGO RPL */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.logo-container img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,.3));
+}
+
+.logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(59,130,246,.6);
+}
+
+/* NAVIGASI */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-links a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: #93c5fd;
+    text-shadow: 0 0 15px #60a5fa;
+}
+
+.hamburger-btn {
+    display: none;
+    background: rgba(255,255,255,.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 8px 13px;
+    border-radius: 9px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+.sidebar-kiri {
+    grid-area: sidebar;
+    padding: 22px;
+}
+
+.sidebar-kiri h3,
+.widget-promo h3 {
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.sidebar-kiri ul {
+    list-style: none;
+    margin-top: 12px;
+    line-height: 2.5;
+}
+
+.sidebar-kiri li {
+    color: #dbeafe;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+/* KONTEN UTAMA */
+.konten-utama {
+    grid-area: main;
+    padding: 25px;
+    background: rgba(255,255,255,.10);
+}
+
+.konten-utama h2 {
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(59,130,246,.5);
+}
+
+/* GRID KARTU */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+/* CARD */
+.card {
+    padding: 15px;
+    transition: transform .35s, box-shadow .35s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow:
+        0 15px 35px rgba(37,99,235,.3),
+        0 0 22px rgba(220,38,38,.2);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 13px;
+    display: block;
+    border: 1px solid rgba(255,255,255,.35);
+}
+
+.card h4 {
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #dbeafe;
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+/* WIDGET PROMO */
+.widget-promo {
+    grid-area: promo;
+    padding: 22px;
+}
+
+.promo-box {
+    background: linear-gradient(
+        135deg,
+        rgba(37,99,235,.3),
+        rgba(220,38,38,.3)
+    );
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.promo-box strong {
+    color: #fff;
+}
+
+/* FOOTER */
+.footer {
+    grid-area: footer;
+    padding: 16px;
+    text-align: center;
+}
+
+.footer-isi {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 7px rgba(0,0,0,.3));
+}
+
+.footer p {
+    color: #e2e8f0;
+    font-size: .9rem;
+}
+
+/* TABLET */
+@media screen and (min-width:601px) and (max-width:1023px) {
+    .page-wrapper {
+        grid-template-columns: 190px 1fr;
+        grid-template-areas:
+            "header header"
+            "sidebar main"
+            "footer footer";
+    }
+
+    .widget-promo {
+        display: none;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+}
+
+/* SMARTPHONE */
+@media screen and (max-width:600px) {
+    .page-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .header {
+        padding: 13px;
+        flex-wrap: wrap;
+        row-gap: 0;
+    }
+
+    .logo-container {
+        gap: 9px;
+    }
+
+    .logo-container img {
+        width: 39px;
+        height: 39px;
+    }
+
+    .logo {
+        font-size: .30rem;
+    }
+
+    .sidebar-kiri,
+    .widget-promo {
+        display: none;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+
+    /* MENU ACCORDION (muncul saat burger diklik) */
+    .nav-links {
+        order: 3;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .4s ease, margin-top .4s ease;
+    }
+
+    .nav-links.buka {
+        max-height: 300px;
+        margin-top: 12px;
+    }
+
+    .nav-links a {
+        padding: 12px 16px;
+        border-top: 1px solid rgba(255,255,255,.15);
+    }
+
+    .konten-utama {
+        padding: 17px;
+    }
+
+    .konten-utama h2 {
+        font-size: 1.2rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 190px;
+    }
+
+    .footer-logo {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* HP LANDSCAPE */
+@media (max-width:850px) and (orientation:landscape) {
+    .header {
+        background: linear-gradient(
+            135deg,
+            rgba(37,99,235,.3),
+            rgba(220,38,38,.3)
+        );
+    }
+}
+
+/* SMART TV */
+@media (min-width:1921px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+/* CHATBOT RPL */
+.chatbot {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    width: 320px;
+    max-width: calc(100vw - 30px);
+    background: rgba(10, 25, 55, .95);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.4);
+    overflow: hidden;
+}
+
+.chatbot-header {
+    padding: 14px;
+    background: linear-gradient(135deg, #2563eb, #dc2626);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.chat-area {
+    height: 230px;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bot-message,
+.user-message {
+    padding: 10px;
+    border-radius: 12px;
+    max-width: 90%;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background: rgba(255,255,255,.15);
+}
+
+.user-message {
+    align-self: flex-end;
+    background: #2563eb;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    gap: 7px;
+}
+
+.chat-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.chat-input button {
+    padding: 10px 13px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.chat-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 998;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #2563eb, #dc2626);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chatbot.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="rpl.png" alt="Logo Jurusan RPL">
+            <div class="logo">RPL SMKN 9 MEDAN</div>
+        </div>
+
+        <nav class="nav-links" id="menu">
+            <a href="#">Beranda</a>
+            <a href="#">Kurikulum</a>
+            <a href="#">Karya Siswa</a>
+            <a href="#">Kontak</a>
+        </nav>
+
+        <button class="hamburger-btn" id="tombolBurger" aria-label="Menu" aria-expanded="false">&#9776;</button>
+    </header>
+
+    <!-- SIDEBAR KIRI -->
+    <aside class="sidebar-kiri">
+        <h3>Menu Cepat</h3>
+        <ul>
+            <li>Jadwal Praktikum</li>
+            <li>Modul Pemrograman Web</li>
+            <li>Daftar Lab RPL</li>
+            <li>Info PKL & LSP</li>
+        </ul>
+    </aside>
+
+    <!-- KONTEN UTAMA -->
+    <main class="konten-utama">
+        <h2>Berita & Proyek Terbaru Kelas XII RPL</h2>
+
+        <div class="card-grid">
+
+            <article class="card">
+                <img src="gambar 1.jpg" alt="Aplikasi Inventaris QR">
+                <h4>Aplikasi Inventaris QR</h4>
+                <p>Sistem peminjaman alat laboratorium berbasis web responsif dengan pemindai QR Code.</p>
+            </article>
+
+            <article class="card">
+                <img src="gambar 2 .jpg" alt="Portal CBT Online">
+                <h4>Portal CBT Online</h4>
+                <p>Platform ujian berbasis komputer yang adaptif pada desktop lab maupun smartphone.</p>
+            </article>
+
+            <article class="card">
+                <img src="gambar 3.jpg" alt="E-Katalog Produk PKK">
+                <h4>E-Katalog Produk PKK</h4>
+                <p>Etalase digital karya kreatif siswa jurusan Rekayasa Perangkat Lunak.</p>
+            </article>
+
+            <article class="card">
+                <img src="gambar 4.jpg" alt="Sistem E-Learning">
+                <h4>Sistem E-Learning & Tugas</h4>
+                <p>Platform pembelajaran daring interaktif untuk mengumpulkan tugas praktikum dan mengakses materi belajar secara mandiri.</p>
+            </article>
+
+            <article class="card">
+                <img src="gambar 5.jpg" alt="Chatbot Bimbingan Konseling">
+                <h4>Chatbot Bimbingan Konseling</h4>
+                <p>Layanan konsultasi interaktif berbasis kecerdasan buatan untuk membantu siswa berbagi keluh kesah dan informasi akademik.</p>
+            </article>
+
+            <article class="card">
+                <img src="gambar 6.jpg" alt="Dashboard Nilai Siswa">
+                <h4>Dashboard Nilai Siswa</h4>
+                <p>Monitoring rapor akademik digital secara real-time untuk wali kelas.</p>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- WIDGET PROMO -->
+    <aside class="widget-promo">
+        <h3>Info & Promo Lab</h3>
+
+        <div class="promo-box">
+            <strong>Uji Kompetensi LSP!</strong>
+            <p>Persiapkan portofolio web responsif kalian sebelum jadwal asesmen.</p>
+        </div>
+    </aside>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-isi">
+            <img src="logo smkn 9 medan.png"
+                 alt="Logo SMK Negeri 9 Medan"
+                 class="footer-logo">
+
+            <p>&copy; 2026 Jurusan RPL SMK Negeri 9 Medan Modul Pemrograman Web Lanjut</p>
+        </div>
+    </footer>
+
+   <!-- TOMBOL BUKA CHATBOT -->
+   <button class="chat-toggle" id="chatToggle"
+   onclick="bukaChatbot()">
+🤖 Tanya RPL
+</button>
+
+<!-- TAMPILAN CHATBOT -->
+<div class="chatbot hidden" id="chatbot">
+
+<div class="chatbot-header">
+   <strong>🤖 RPL Smart Assistant</strong>
+   <button onclick="tutupChatbot()">×</button>
+</div>
+
+<div class="chat-area" id="chatArea">
+   <div class="bot-message">
+       Halo! Selamat datang di Portal RPL SMK Negeri 9 Medan.
+       Ada yang ingin kamu tanyakan?
+   </div>
+</div>
+
+<div class="chat-input">
+   <input type="text" id="userInput"
+          placeholder="Tulis pertanyaan...">
+
+   <button onclick="sendMessage()">Kirim</button>
+</div>
+
+</div>
+
+<!-- HUBUNGKAN JAVASCRIPT -->
+<script src="script.js"></script>
+
+<!-- JAVASCRIPT MENU BURGER (ACCORDION DI HP) -->
+<script>
+(function () {
+    var tombol = document.getElementById('tombolBurger');
+    var menu = document.getElementById('menu');
+
+    tombol.addEventListener('click', function () {
+        var terbuka = menu.classList.toggle('buka');
+        tombol.setAttribute('aria-expanded', terbuka);
+        tombol.innerHTML = terbuka ? '&#10005;' : '&#9776;';
+    });
+
+    // menu menutup sendiri setelah salah satu link diklik
+    var link = menu.querySelectorAll('a');
+    for (var i = 0; i < link.length; i++) {
+        link[i].addEventListener('click', function () {
+            menu.classList.remove('buka');
+            tombol.setAttribute('aria-expanded', 'false');
+            tombol.innerHTML = '&#9776;';
+        });
+    }
+})();
+</script>
+
+</body>
+</html>
